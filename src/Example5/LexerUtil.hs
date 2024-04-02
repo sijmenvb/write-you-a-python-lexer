@@ -249,7 +249,7 @@ startWhite inp inp_len = do
      is <- userStateIndentStack <$> alexGetUserState
      let cur = case is of
            c:_ -> c
-           _ -> error "Indentation stack is not set, alteast one element should be present. Empty list found"
+           _ -> error "Indentation stack is not set, at least one element should be present. Empty list found"
 
      parenDepth <- length . userStateParenStack <$> alexGetUserState
      let (AlexPosn _ line _, _, _,s) = inp
@@ -266,7 +266,7 @@ startWhite inp inp_len = do
         | otherwise -> do
           -- at this point we have an indentation, but this
           -- indentation could starting on different line based on
-          -- preceding empty lines. For all precedin empty lines we
+          -- preceding empty lines. For all preceding empty lines we
           -- will insert an NL token
           let parts = L.map T.length . T.splitOn "\n" . T.pack . take inp_len $ s
           let pos = L.last parts + 1
